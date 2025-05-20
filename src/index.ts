@@ -1,4 +1,6 @@
+import "dotenv/config"
 import { WebSocketServer, WebSocket } from "ws";
+import { handleUrl } from "./handlers/urlHandle";
 
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -35,6 +37,23 @@ wss.on("connection", (ws) => {
         const newPerson = new Person(roomId, clientName, websocketConn);
         roomArray.push(newPerson);
         currentPerson = newPerson;
+      } else if(message.type === "file-url"){
+        const url = message.data; 
+          roomArray.forEach((person) => {
+          if (
+            person.roomId === roomId &&
+            person.websocketConn !== websocketConn
+          ) {
+            person.websocketConn.send(
+              JSON.stringify({
+                Name: clientName,
+                data: `${clientName} shared a file`,
+                file_url : url,
+                roomId: roomId,
+              })
+            );
+          }
+        });
       } else {
         // Broadcast the message to everyone else in the same room
         roomArray.forEach((person) => {

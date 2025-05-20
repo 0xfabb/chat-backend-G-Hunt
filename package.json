@@ -13,7 +13,12 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/ws": "^8.18.1",
+    "appwrite": "^18.0.0",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.5.0",
+    "fetch-blob": "^4.0.0",
     "ws": "^8.18.2",
     "y-websocket": "^3.0.0"
   }
