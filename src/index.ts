@@ -28,12 +28,15 @@ wss.on("connection", (ws) => {
         roomArray.push(newPerson);
       } else {
         roomArray.forEach((person) => {
-          if (
-            person.roomId === roomId &&
-            person.websocketConn != websocketConn
-          ) {
-            person.websocketConn.send(JSON.stringify(message.data));
-          }
+  if (person.roomId === roomId && person.websocketConn !== websocketConn) {
+    person.websocketConn.send(
+      JSON.stringify({
+        Name: clientName,
+        data: message.data,
+        roomId: roomId,
+      })
+    );
+  }
         });
       }
     } catch (error) {
